@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brian Axel - Portafolio Profesional</title>
+    
+    <!-- Tailwind CSS (Framework de diseño) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome (Iconos) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Configuración personalizada de Tailwind y estilos CSS -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#0f172a',    // Azul oscuro fondo
+                        accent: '#38bdf8',     // Azul cielo brillante
+                        secondary: '#64748b',  // Gris azulado
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Estilos base */
+        body {
+            background-color: #0f172a;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Fondo Parallax */
+        .parallax-bg {
+            background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop');
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            filter: brightness(0.4); /* Oscurecer para legibilidad */
+        }
+
+        /* Efecto Glassmorphism (Cristal) */
+        .glass {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px -10px rgba(56, 189, 248, 0.3);
+            background: rgba(30, 41, 59, 0.9);
+            border-color: rgba(56, 189, 248, 0.3);
+        }
+
+        /* Animaciones de entrada (Scroll Reveal) */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Botón de navegación activo */
+        .nav-link.active {
+            color: #38bdf8;
+            border-bottom: 2px solid #38bdf8;
+        }
+
+        /* Estilo del scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #38bdf8;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Fondo Parallax Fijo -->
+    <div class="parallax-bg"></div>
+
+    <!-- Navbar Fijo -->
+    <nav class="fixed w-full z-50 glass shadow-lg transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo / Nombre -->
+                <div class="flex-shrink-0">
+                    <a href="#" class="text-2xl font-bold tracking-wider text-white hover:text-accent transition-colors">
+                        Brian <span class="text-accent">Axel</span>
+                    </a>
+                </div>
+                
+                <!-- Enlaces de Escritorio -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#inicio" class="nav-link hover:text-accent px-3 py-2 rounded-md text-sm font-medium transition-colors">Inicio</a>
+                        <a href="#acerca" class="nav-link hover:text-accent px-3 py-2 rounded-md text-sm font-medium transition-colors">Acerca de mí</a>
+                        <a href="#habilidad" class="nav-link hover:text-accent px-3 py-2 rounded-md text-sm font-medium transition-colors">Mis Habilidades</a>
+                        <a href="#proyectos" class="nav-link hover:text-accent px-3 py-2 rounded-md text-sm font-medium transition-colors">Proyectos</a>
+                        <a href="#contacto" class="nav-link hover:text-accent px-3 py-2 rounded-md text-sm font-medium transition-colors">Mi contacto</a>
+                    </div>
+                </div>
+
+                <!-- Botón Menú Móvil -->
+                <div class="-mr-2 flex md:hidden">
+                    <button type="button" onclick="toggleMenu()" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menú Móvil (Oculto por defecto) -->
+        <div class="md:hidden hidden glass border-t border-gray-700" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#inicio" onclick="toggleMenu()" class="text-gray-300 hover:text-accent block px-3 py-2 rounded-md text-base font-medium">Inicio</a>
+                <a href="#acerca" onclick="toggleMenu()" class="text-gray-300 hover:text-accent block px-3 py-2 rounded-md text-base font-medium">Acerca de mí</a>
+                <a href="#habilidad" onclick="toggleMenu()" class="text-gray-300 hover:text-accent block px-3 py-2 rounded-md text-base font-medium">Mis Habilidades</a>
+                <a href="#proyectos" onclick="toggleMenu()" class="text-gray-300 hover:text-accent block px-3 py-2 rounded-md text-base font-medium">Proyectos</a>
+                <a href="#contacto" onclick="toggleMenu()" class="text-gray-300 hover:text-accent block px-3 py-2 rounded-md text-base font-medium">Mi contacto</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sección Inicio -->
+    <section id="inicio" class="min-h-screen flex items-center justify-center pt-20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            
+            <!-- Columna Izquierda: Información -->
+            <div class="order-2 md:order-1 text-center md:text-left reveal">
+                <span class="text-accent font-semibold tracking-wider uppercase mb-2 block">Desarrollador & Profesional</span>
+                <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+                    Hola, soy <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400">
+                        Brian Axel Alvarez Uriostegui
+                    </span>
+                </h1>
+                <p class="text-gray-300 text-lg md:text-xl mb-8 leading-relaxed max-w-lg mx-auto md:mx-0 glass p-6 rounded-lg">
+                    Transformo ideas complejas en soluciones digitales elegantes. Especializado en crear experiencias web modernas, funcionales y de alto impacto.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                    <a href="#proyectos" class="px-8 py-3 bg-accent hover:bg-blue-600 text-slate-900 font-bold rounded-full transition-all duration-300 shadow-[0_0_20px_rgba(56,189,248,0.5)] hover:shadow-[0_0_30px_rgba(56,189,248,0.7)] text-center">
+                        Ver Proyectos
+                    </a>
+                    <a href="#contacto" class="px-8 py-3 border border-white/30 hover:bg-white/10 rounded-full font-semibold transition-all duration-300 text-center backdrop-blur-sm">
+                        Contáctame
+                    </a>
+                </div>
+            </div>
+
+            <!-- Columna Derecha: Foto -->
+            <div class="order-1 md:order-2 flex justify-center reveal">
+                <div class="relative w-64 h-64 md:w-80 md:h-80 group">
+                    <!-- Efecto de brillo detrás de la foto -->
+                    <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 to-emerald-600 rounded-full blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
+                    <!-- Foto de perfil -->
+                    <img 
+                        src="Img/yo.webp" 
+                        alt="Foto de Brian Axel" 
+                        class="relative w-full h-full object-cover rounded-full border-4 border-slate-900 shadow-2xl"
+                    >
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Acerca de Mí -->
+    <section id="acerca" class="py-24 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto glass rounded-2xl p-8 md:p-12 reveal">
+            <h2 class="text-3xl md:text-4xl font-bold mb-8 text-center border-b border-gray-700 pb-4">
+                <span class="text-accent">Acerca</span> de Mí
+            </h2>
+            <div class="text-gray-300 space-y-6 text-lg leading-relaxed">
+                <p>
+                    Soy estudiante de Ingenieria en Sistemas Computacionales en la Universidad de la República Mexicana (UNIREM), Empece a estudiar esta carrera ya desde la preparatoria empece a ver las bases de la programación. Mi enfoque se centra en la calidad del código, la experiencia del usuario y la innovación constante.
+                </p>
+                <p>
+                    En un futuro me encantaria trabajar para alguna empresa importante y seguir aprendiendo no solo a programar paginas web si no támbien crear aplicaciones, videojuegos, bases de datos, lo que es software, hardware y muchas cosas más ya que esta carrera es muy extensa y diversa.
+                </p>
+                <p>
+                    Me gustaría programar un videojuego me hace mucha ilución que algún día mi juego sea muy conosido por muchas personas me fasina jugar videojuegos me asombra la idea de como programaron ese juego el como con una simple programación se pueden hacer cosas infinitas no hay limites se puede hacer hasta de cosas que no existen en la vida real por eso me encanta lo que hago y lo que puedo llegar hacer, casi logro hacer un videojuego pero lamentablemente ese proyecto no lo pude concluir por falta de conocimiento y tiempo espero algún dia volverlo a retomar.
+                </p>
+                
+                <!-- Skills Grid (Pequeño añadido visual) -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+        <section id="habilidad" class="py-24 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto glass rounded-2xl p-8 md:p-12 reveal">
+            <h2 class="text-3xl md:text-4xl font-bold mb-8 text-center border-b border-gray-700 pb-4">
+                <span class="text-accent">Mis</span> Habilidades
+            </h2>
+            <div class="text-gray-300 space-y-6 text-lg leading-relaxed">
+                <p>
+                    Como desarrollador web apasionado, me especializo en crear experiencias digitales atractivas y funcionales. Mi objetivo es transformar ideas en soluciones tecnológicas que impulsen el éxito de mis clientes y usuarios.
+                    Mi enfoque se centra en la calidad del código, la experiencia del usuario y la innovación constante. Estoy comprometido con el aprendizaje continuo para mantenerme al día con las últimas tendencias y tecnologías en el desarrollo web.
+                </p>
+                <p>
+                    Con experiencia en diversas tecnologías del ecosistema web, me dedico a resolver problemas reales mediante código limpio y eficiente. Disfruto trabajando en equipo, aprendiendo nuevas herramientas y enfrentando desafíos que me permitan crecer profesionalmente. Algunos de mis lenguajes y tecnologías favoritas incluyen JavaScript, Python, HTML5, CSS3, así como frameworks como React, vite, slidev y Node.js.
+                </p>
+                
+                <!-- Skills Grid (Pequeño añadido visual) -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-6">
+                    <div class="text-center p-4 bg-slate-800/50 rounded-lg border border-gray-700 hover:border-accent transition-colors">
+                        <i class="fas fa-code text-accent text-2xl mb-2"></i>
+                        <h3 class="font-bold">Desarrollo</h3>
+                    </div>
+                    <div class="text-center p-4 bg-slate-800/50 rounded-lg border border-gray-700 hover:border-accent transition-colors">
+                        <i class="fas fa-paint-brush text-accent text-2xl mb-2"></i>
+                        <h3 class="font-bold">Diseño UI/UX</h3>
+                    </div>
+                    <div class="text-center p-4 bg-slate-800/50 rounded-lg border border-gray-700 hover:border-accent transition-colors">
+                        <i class="fas fa-database text-accent text-2xl mb-2"></i>
+                        <h3 class="font-bold">Backend</h3>
+                    </div>
+                    <div class="text-center p-4 bg-slate-800/50 rounded-lg border border-gray-700 hover:border-accent transition-colors">
+                        <i class="fas fa-mobile-alt text-accent text-2xl mb-2"></i>
+                        <h3 class="font-bold">Responsive</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Proyectos -->
+    <section id="proyectos" class="py-24 px-4 sm:px-6 lg:px-8 bg-black/20">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center text-white">
+                Mis <span class="text-accent">Proyectos</span>
+            </h2>
+<style> 
+    button {
+    width: 10em;
+    position: center;
+    height: 3.5em;
+    border: 3px ridge #149CEA;
+    outline: none;
+    background-color: transparent;
+    color: white;
+    transition: 1s;
+    border-radius: 0.3em;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button::after {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: 3%;
+    width: 95%;
+    height: 40%;
+    transition: 0.5s;
+    transform-origin: center;
+}
+
+button::before {
+    content: "";
+    transform-origin: center;
+    position: absolute;
+    top: 80%;
+    left: 3%;
+    width: 95%;
+    height: 40%;
+    transition: 0.5s;
+}
+
+button:hover::before, button:hover::after {
+    transform: scale(0)
+}
+
+button:hover {
+    box-shadow: inset 0px 0px 25px #1479EA;
+}
+</style>
+            <!-- Grid de 8 tarjetas -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Tarjeta 1 -->
+                <article class="glass-card rounded-xl overflow-hidden flex flex-col reveal group">
+                    <div class="h-48 overflow-hidden relative">
+                        <div class="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-colors z-10"></div>
+                        <img src="https://cdn.prod.website-files.com/630ca238d7b194730630c5ee/66703e5d4f82cf35b254d456_Blog2%20(8).webp" alt="E-commerce" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col">
+                        <h3 class="text-xl font-bold text-white mb-2">Python</h3>
+                        <p class="text-gray-400 text-sm mb-4 flex-1">Códigos sencillos para comenzar a programar con python en google colab.</p>
+                        
+                        <button onclick="openProject('https://colab.research.google.com/drive/1cftR3WZ6zw_XjBZVAU8vS1HizNktGECX?usp=sharing')">
+                        Ver Proyecto
+                        </button>
+
+                    </div>
+                </article>
+
+                <!-- Tarjeta 2 -->
+                <article class="glass-card rounded-xl overflow-hidden flex flex-col reveal group">
+                    <div class="h-48 overflow-hidden relative">
+                        <div class="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-colors z-10"></div>
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXFuxbwY90AiaEl7l1dvI65SsRNqzP0s5dMw&s" alt="Dashboard" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col">
+                        <h3 class="text-xl font-bold text-white mb-2">Primera página</h3>
+                        <p class="text-gray-400 text-sm mb-4 flex-1">Aqui se puede ver mi información personal esta es mi primera página web.</p>
+                        <button onclick="openProject('https://braxalur2005-dotcom.github.io/Primero/')">
+                        Ver Proyecto
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Tarjeta 3 -->
+                <article class="glass-card rounded-xl overflow-hidden flex flex-col reveal group">
+                    <div class="h-48 overflow-hidden relative">
+                        <div class="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-colors z-10"></div>
+                        <img src="https://media.istockphoto.com/id/1321532593/es/vector/conjunto-de-iconos-html5-css3-js-desarrollo-web.jpg?s=612x612&w=0&k=20&c=wSRRTEHCy1M9IHRLau-AOtUxJJuXVetj1vQ0K_DFL5g=" alt="Mobile App" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration -500">
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col">
+                        <h3 class="text-xl font-bold text-white mb-2">Modificaciones</h3>
+                        <p class="text-gray-400 text-sm mb-4 flex-1">Muy similar a la primera solo que se hicieron cambios y se agregaron mis redes sociales .</p>
+                        <button onclick="openProject('https://braxalur2005-dotcom.github.io/segund/')">
+                        Ver Proyecto
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Tarjeta 4 -->
+                <article class="glass-card rounded-xl overflow-hidden flex flex-col reveal group">
+                    <div class="h-48 overflow-hidden relative">
+                        <div class="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-colors z-10"></div>
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTz5_pFXLFlros8tRZoOHLVZVI30KJEU411IQ&s" alt="API" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col">
+                        <h3 class="text-xl font-bold text-white mb-2">Compiladores</h3>
+                        <p class="text-gray-400 text-sm mb-4 flex-1">Esta es una página hecha con react js fue creada en equipo es el concepto de los compiladores.</p>
+                        <button onclick="openProject('https://braxalur2005-dotcom.github.io/compi/')">
+                        Ver Proyecto
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Tarjeta 5 -->
+                <article class="glass-card rounded-xl overflow-hidden flex flex-col reveal group">
+                    <div class="h-48 overflow-hidden relative">
+                        <div class="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-colors z-10"></div>
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRiMw2Yu6w_1tFB83bgpugTFYzmzZBDonk3w&s" alt="Corporate" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col">
+                        <h3 class="text-xl font-bold text-white mb-2">Casa Mexa</h3>
+                        <p class="text-gray-400 text-sm mb-4 flex-1">Página web de restaurante mexicano 100% funcional y profesional.</p>
+                        <button onclick="openProject('https://braxalur2005-dotcom.github.io/Restaurante/')">
+                        Ver Proyecto
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Tarjeta 6 -->
+                <article class="glass-card rounded-xl overflow-hidden flex flex-col reveal group">
+                    <div class="h-48 overflow-hidden relative">
+                        <div class="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-colors z-10"></div>
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFGUv8mK9khAbo29pzVflEESpz8E7s-fZrFg&s" alt="Portfolio" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col">
+                        <h3 class="text-xl font-bold text-white mb-2">Casa Mexa (En en equipo)</h3>
+                        <p class="text-gray-400 text-sm mb-4 flex-1">Un restaurante profesional con mis compañeros en equipo.</p>
+                        <button onclick="openProject('https://avilamiguel1007.github.io/Mosqueteros/')">
+                        Ver Proyecto
+                        </button>
+                    </div>
+                </article>
+
+                <article class="glass-card rounded-xl overflow-hidden flex flex-col reveal group">
+                    <div class="h-48 overflow-hidden relative">
+                        <div class="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-colors z-10"></div>
+                        <img src="https://img.freepik.com/vector-gratis/juego-arcade-pizza-refresco-ilustracion-icono-vectorial-dibujos-animados-tecnologia-alimentaria-aislada-plana_138676-14847.jpg?semt=ais_hybrid&w=740&q=80" alt="Portfolio" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col">
+                        <h3 class="text-xl font-bold text-white mb-2">Juego</h3>
+                        <p class="text-gray-400 text-sm mb-4 flex-1">Un juego de arcade que te regresara a los 80's de disparos.</p>
+                        <button onclick="openProject('https://braxalur2005-dotcom.github.io/Game/?classId=14f62a27-acce-4f76-837a-6d0c8fd177a5&assignmentId=382f7127-ec55-4040-8b12-4c362497667b&submissionId=71426688-f214-4ee0-6ddf-f817c526c70b')">
+                        Ver Proyecto
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Tarjeta 7 -->
+                <article class="glass-card rounded-xl overflow-hidden flex flex-col reveal group">
+                    <div class="h-48 overflow-hidden relative">
+                        <div class="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-colors z-10"></div>
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAL1ruwZI4XGUZ_8m0haizhxnJHzNCe7zAlw&s" alt="Chat" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col">
+                        <h3 class="text-xl font-bold text-white mb-2">Salud Financiera</h3>
+                        <p class="text-gray-400 text-sm mb-4 flex-1">Aplicación de mensajería instantánea con WebSockets.</p>
+                        <button onclick="openProject('https://braxalur2005-dotcom.github.io/finanzas/')">
+                        Ver Proyecto
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Tarjeta 8 -->
+                <article class="glass-card rounded-xl overflow-hidden flex flex-col reveal group">
+                    <div class="h-48 overflow-hidden relative">
+                        <div class="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-colors z-10"></div>
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQqPtOyokMCdzOX8mOxr7tzXL1w4VZJGVnXg&s" alt="Code" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col">
+                        <h3 class="text-xl font-bold text-white mb-2">Convertidor</h3>
+                        <p class="text-gray-400 text-sm mb-4 flex-1">un convertidor de Fahrenheit a Celsius muy preciso que usa una red neuronal.</p>
+                            <button onclick="openProject('https://colab.research.google.com/drive/13nyYqHdyaOXyqFToptOnmazxY8r-35PD?usp=sharing')">
+                        Ver Proyecto
+                        </button>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Contacto -->
+    <section id="contacto" class="py-24 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto glass rounded-2xl p-8 md:p-12 text-center reveal">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                Mi <span class="text-accent">Contacto</span>
+            </h2>
+            <p class="text-gray-300 mb-10 max-w-2xl mx-auto">
+                ¿Tienes un proyecto en mente o simplemente quieres saludar? ¡Estoy disponible en todas estas plataformas!
+            </p>
+
+            <!-- Redes Sociales Grid/Flex -->
+            <div class="flex flex-wrap justify-center gap-6">
+                <!-- WhatsApp -->
+                <a href="https://api.whatsapp.com/send/?phone=5617833638&text=Hola%21+Quiero+mas+informes&type=phone_number&app_absent=0" target="_blank" class="group flex flex-col items-center gap-2">
+                    <div class="w-14 h-14 rounded-full bg-slate-800 flex items-center justify-center border border-gray-600 group-hover:bg-[#25D366] group-hover:border-[#25D366] transition-all duration-300 transform group-hover:scale-110">
+                        <i class="fab fa-whatsapp text-2xl text-white"></i>
+                    </div>
+                    <span class="text-sm text-gray-400 group-hover:text-white transition-colors">WhatsApp</span>
+                </a>
+
+                <!-- GitHub -->
+                <a href="https://github.com/braxalur2005-dotcom" target="_blank" class="group flex flex-col items-center gap-2">
+                    <div class="w-14 h-14 rounded-full bg-slate-800 flex items-center justify-center border border-gray-600 group-hover:bg-[#333] group-hover:border-[#333] transition-all duration-300 transform group-hover:scale-110">
+                        <i class="fab fa-github text-2xl text-white"></i>
+                    </div>
+                    <span class="text-sm text-gray-400 group-hover:text-white transition-colors">GitHub</span>
+                </a>
+
+                <!-- LinkedIn -->
+                <a href="https://www.linkedin.com/in/%C3%A1lvarez-uriostegui-brian-axel-b70b83397/" target="_blank" class="group flex flex-col items-center gap-2">
+                    <div class="w-14 h-14 rounded-full bg-slate-800 flex items-center justify-center border border-gray-600 group-hover:bg-[#0077b5] group-hover:border-[#0077b5] transition-all duration-300 transform group-hover:scale-110">
+                        <i class="fab fa-linkedin-in text-2xl text-white"></i>
+                    </div>
+                    <span class="text-sm text-gray-400 group-hover:text-white transition-colors">LinkedIn</span>
+                </a>
+
+                <!-- Instagram -->
+                <a href="https://www.instagram.com/brianaxelalvarezuriostegui/" target="_blank" class="group flex flex-col items-center gap-2">
+                    <div class="w-14 h-14 rounded-full bg-slate-800 flex items-center justify-center border border-gray-600 group-hover:bg-pink-600 group-hover:border-pink-600 transition-all duration-300 transform group-hover:scale-110">
+                        <i class="fab fa-instagram text-2xl text-white"></i>
+                    </div>
+                    <span class="text-sm text-gray-400 group-hover:text-white transition-colors">Instagram</span>
+                </a>
+
+                <!-- Facebook -->
+                <a href="https://www.facebook.com/brianaxel.alvarez.9?locale=es_LA" target="_blank" class="group flex flex-col items-center gap-2">
+                    <div class="w-14 h-14 rounded-full bg-slate-800 flex items-center justify-center border border-gray-600 group-hover:bg-[#1877F2] group-hover:border-[#1877F2] transition-all duration-300 transform group-hover:scale-110">
+                        <i class="fab fa-facebook-f text-2xl text-white"></i>
+                    </div>
+                    <span class="text-sm text-gray-400 group-hover:text-white transition-colors">Facebook</span>
+                </a>
+
+                <!-- X (Twitter) -->
+                <a href="https://x.com/urio21170" target="_blank" class="group flex flex-col items-center gap-2">
+                    <div class="w-14 h-14 rounded-full bg-slate-800 flex items-center justify-center border border-gray-600 group-hover:bg-black group-hover:border-white transition-all duration-300 transform group-hover:scale-110">
+                        <i class="fab fa-x-twitter text-2xl text-white"></i>
+                    </div>
+                    <span class="text-sm text-gray-400 group-hover:text-white transition-colors">X</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="glass border-t border-gray-800 py-8">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-gray-400">
+                &copy; <span id="year"></span> Brian Axel Alvarez Uriostegui. Todos los derechos reservados.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Año actual footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Menú Móvil
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+            } else {
+                menu.classList.add('hidden');
+            }
+        }
+
+        // Función para abrir proyectos
+        function openProject(url) {
+            window.open(url, '_blank');
+        }
+
+        // Animación de Scroll (Intersection Observer)
+        document.addEventListener('DOMContentLoaded', () => {
+            const reveals = document.querySelectorAll('.reveal');
+
+            const revealOnScroll = () => {
+                const windowHeight = window.innerHeight;
+                const elementVisible = 150;
+
+                reveals.forEach((reveal) => {
+                    const elementTop = reveal.getBoundingClientRect().top;
+                    if (elementTop < windowHeight - elementVisible) {
+                        reveal.classList.add('active');
+                    }
+                });
+            };
+
+            window.addEventListener('scroll', revealOnScroll);
+            // Trigger una vez al cargar
+            revealOnScroll();
+        });
+
+        // Highlight active nav link on scroll
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - sectionHeight / 3)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(li => {
+                li.classList.remove('active');
+                if (li.getAttribute('href').includes(current)) {
+                    li.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
